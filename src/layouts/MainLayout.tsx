@@ -55,7 +55,7 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '0 16px' }}>
+        <Content style={{ padding: '45px' }}>
           <Outlet />
         </Content>
       </Layout>
