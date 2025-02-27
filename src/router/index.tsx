@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <ListPage />,
       },
       {
-        path: 'create',
+        path: 'create/:surveyId',
         element: <CreatePage />,
       },
     ],
