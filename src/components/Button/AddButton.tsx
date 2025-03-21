@@ -1,15 +1,65 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { css } from '@emotion/react'
+import { Button, Popover } from 'antd'
+import { useState } from 'react'
+
+import { QuestionInputType } from '../../types'
 
 interface AddButtonProps {
-  onClick: () => void
+  onClick: (type: QuestionInputType) => void
 }
 const AddButton = ({ onClick }: AddButtonProps) => {
+  const [visible, setVisible] = useState(false)
+
+  const hide = () => {
+    setVisible(false)
+  }
+  const handleVisibleChange = (visible: boolean) => {
+    setVisible(visible)
+  }
   return (
     <div css={AddbuttonWrap}>
-      <button css={addbuttonStyle} onClick={onClick}>
-        <PlusOutlined />
-      </button>
+      <Popover
+        trigger="click"
+        content={
+          <div css={{ display: 'flex', flexDirection: 'column' }}>
+            <Button
+              type="text"
+              onClick={() => {
+                hide()
+                onClick('select')
+              }}
+            >
+              객관식
+            </Button>
+            <Button
+              type="text"
+              onClick={() => {
+                hide()
+                onClick('text')
+              }}
+            >
+              단답식
+            </Button>
+            <Button
+              type="text"
+              onClick={() => {
+                hide()
+                onClick('textarea')
+              }}
+            >
+              서술식
+            </Button>
+          </div>
+        }
+        open={visible}
+        onOpenChange={handleVisibleChange}
+        placement="right"
+      >
+        <button css={addbuttonStyle}>
+          <PlusOutlined />
+        </button>
+      </Popover>
     </div>
   )
 }
