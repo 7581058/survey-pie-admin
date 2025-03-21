@@ -1,64 +1,48 @@
 import { Col, Input, Row } from 'antd'
-import { produce } from 'immer'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import OptionSection from '../components/Section/OptionSection'
 import PreviewSection from '../components/Section/PreviewSection'
-import { DEFAULT_MOCK_DATA, QUESTIONS_MOCK_DATA } from '../mocks'
-import { QuestionDataType } from '../types'
-
+import {
+  addQuestion,
+  deleteQuestion,
+  moveDownQuestion,
+  moveUpQuestion,
+  setTitle,
+} from '../stores/surveySlice'
+import { QuestionDataType, QuestionType } from '../types'
+interface SurveyState {
+  survey: QuestionDataType
+  questions: QuestionType[]
+}
 const CreatePage = () => {
-  const [data, setData] = useState<QuestionDataType>(QUESTIONS_MOCK_DATA)
-
+  const survey = useSelector((state: SurveyState) => state.survey)
+  const dispatch = useDispatch()
   return (
     <Row>
       <Col flex="auto">
         <Input
           placeholder="설문 제목을 입력해주세요."
-          value={data.title}
+          value={survey.title}
           onChange={(e) => {
-            setData(
-              produce((draft) => {
-                draft.title = e.target.value
-              }),
-            )
+            dispatch(setTitle(e.target.value))
           }}
         />
         <PreviewSection
-          questions={data.questions}
+          questions={survey.questions}
           addQuestion={() => {
-            setData(
-              produce((draft) => {
-                draft.questions.push(DEFAULT_MOCK_DATA)
-              }),
-            )
+            dispatch(addQuestion())
           }}
           moveUpQuestion={(index: number) => {
             if (index === 0) return
-            setData(
-              produce((draft) => {
-                const target = draft.questions[index]
-                draft.questions[index] = draft.questions[index - 1]
-                draft.questions[index - 1] = target
-              }),
-            )
+            dispatch(moveUpQuestion(index))
           }}
           moveDownQuestion={(index: number) => {
-            if (index === data.questions.length - 1) return
-            setData(
-              produce((draft) => {
-                const target = draft.questions[index]
-                draft.questions[index] = draft.questions[index + 1]
-                draft.questions[index + 1] = target
-              }),
-            )
+            if (index === survey.questions.length - 1) return
+            dispatch(moveDownQuestion(index))
           }}
           deleteQuestion={(index: number) => {
-            setData(
-              produce((draft) => {
-                draft.questions.splice(index, 1)
-              }),
-            )
+            dispatch(deleteQuestion(index))
           }}
         />
       </Col>
