@@ -1,10 +1,10 @@
-import { QuestionOptionsType } from '../../types'
+import { QuestionInputType, QuestionOptionsType } from '../../types'
 import SelectInput from '../Input/SelectInput'
 import TextAreaInput from '../Input/TextAreaInput'
 import TextInput from '../Input/TextInput'
 
 interface CardBodyProps {
-  type: 'select' | 'text' | 'textarea'
+  type: QuestionInputType
   options: QuestionOptionsType
 }
 const CardBody = ({ type, options }: CardBodyProps) => {

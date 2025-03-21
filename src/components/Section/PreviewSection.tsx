@@ -1,11 +1,11 @@
-import { QuestionType } from '../../types'
+import { QuestionInputType, QuestionType } from '../../types'
 import AddButton from '../Button/AddButton'
 import Card from '../Card/Card'
 import CardBody from '../Card/CardBody'
 
 interface PreviewSectionProps {
   questions: QuestionType[]
-  addQuestion: () => void
+  addQuestion: (type: QuestionInputType) => void
   moveUpQuestion: (index: number) => void
   moveDownQuestion: (index: number) => void
   deleteQuestion: (index: number) => void

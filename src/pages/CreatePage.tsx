@@ -10,7 +10,7 @@ import {
   moveUpQuestion,
   setTitle,
 } from '../stores/surveySlice'
-import { QuestionDataType, QuestionType } from '../types'
+import { QuestionDataType, QuestionInputType, QuestionType } from '../types'
 interface SurveyState {
   survey: QuestionDataType
   questions: QuestionType[]
@@ -30,8 +30,8 @@ const CreatePage = () => {
         />
         <PreviewSection
           questions={survey.questions}
-          addQuestion={() => {
-            dispatch(addQuestion())
+          addQuestion={(type: QuestionInputType) => {
+            dispatch(addQuestion(type))
           }}
           moveUpQuestion={(index: number) => {
             if (index === 0) return

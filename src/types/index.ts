@@ -23,3 +23,5 @@ export interface QuestionDataType {
   questions: QuestionType[]
   createdAt: number
 }
+
+export type QuestionInputType = 'select' | 'text' | 'textarea'
