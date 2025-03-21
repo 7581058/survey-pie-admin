@@ -1,4 +1,4 @@
-import { Table, TableProps } from 'antd'
+import { Button, Table, TableProps } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import useSWR from 'swr'
@@ -59,7 +59,15 @@ const ListPage = () => {
   const [page, setPage] = useState<number | undefined>(2)
   const { data, error } = useSWR('/surveys', fetcher)
   if (error) {
-    return 'error'
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <h3>데이터를 불러오는 중 오류가 발생했습니다</h3>
+        <p>{error.message || '알 수 없는 오류가 발생했습니다'}</p>
+        <Button type="primary" onClick={() => window.location.reload()}>
+          다시 시도
+        </Button>
+      </div>
+    )
   }
   return (
     <div>
@@ -82,6 +90,7 @@ const ListPage = () => {
           pageSize: PAGE_SIZE,
         }}
         onChange={(pagination) => setPage(pagination.current)}
+        locale={{ emptyText: '데이터가 없습니다' }}
       />
     </div>
   )
